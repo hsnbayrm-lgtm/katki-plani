@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurkPower — Katkı Planı</title>
+<style>
+:root{--gray:#58595B;--gray2:#6D6E71;--red:#A31D1D;--red2:#7d1414;--bg:#f4f4f5;--card:#ffffff;--line:#e4e4e7}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:#27272a}
+.logo{text-align:center;user-select:none}
+.logo .l1{font-weight:800;letter-spacing:1px}
+.logo .l1 .t{color:var(--gray)}.logo .l1 .p{color:var(--red)}
+.logo .rule{height:5px;background:var(--gray);margin:6px auto 8px;border-radius:2px}
+.logo .l2{color:var(--gray2);letter-spacing:.55em;font-weight:400;text-indent:.55em}
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#fafafa 0%,#ececee 60%,#e5e0e0 100%);padding:24px;text-align:center}
+#hero .logo .l1{font-size:64px}#hero .logo .rule{width:420px;max-width:80vw}#hero .logo .l2{font-size:26px}
+#hero h1{margin-top:38px;font-size:30px;color:var(--gray);font-weight:600}
+#hero h2{margin-top:10px;font-size:19px;color:var(--red);font-weight:600}
+#hero .sub{margin-top:14px;color:var(--gray2);font-size:15px}
+#hero .stats{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap;justify-content:center}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 30px;min-width:150px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.stat .n{font-size:34px;font-weight:800;color:var(--red)}
+.stat .d{font-size:13px;color:var(--gray2);margin-top:4px}
+#hero .cta{margin-top:46px;background:var(--red);color:#fff;border:none;padding:14px 38px;font-size:16px;border-radius:30px;cursor:pointer;box-shadow:0 6px 20px rgba(163,29,29,.35);transition:.2s}
+#hero .cta:hover{background:var(--red2);transform:translateY(-2px)}
+/* NAV */
+#nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:50;display:none}
+#nav .in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:10px 16px;overflow-x:auto}
+#nav .mini{display:flex;flex-direction:column;margin-right:14px;min-width:120px}
+#nav .mini .l1{font-size:17px}#nav .mini .rule{height:2px;margin:2px 0}#nav .mini .l2{font-size:8px}
+.tab{border:none;background:none;padding:9px 14px;font-size:14px;color:var(--gray);cursor:pointer;border-radius:8px;white-space:nowrap;font-weight:600}
+.tab:hover{background:#f1f1f2}
+.tab.act{background:var(--red);color:#fff}
+/* SECTIONS */
+main{max-width:1100px;margin:0 auto;padding:36px 20px 80px}
+section.page{display:none;animation:fadein .35s ease}
+section.page.show{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h3.title{font-size:26px;color:var(--gray);margin-bottom:6px}
+p.lead{color:var(--gray2);margin-bottom:26px;font-size:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--red);border-radius:12px;padding:20px;box-shadow:0 3px 12px rgba(0,0,0,.05);cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.1)}
+.card h4{color:var(--red);font-size:16px;margin-bottom:8px}
+.card .tag{display:inline-block;background:#f1f1f2;color:var(--gray);font-size:11px;padding:3px 10px;border-radius:12px;margin-bottom:10px;font-weight:700}
+.card p{font-size:13.5px;color:#3f3f46;line-height:1.55}
+.card ul{margin:10px 0 0 18px;font-size:13px;color:#3f3f46;line-height:1.7;display:none}
+.card.open ul{display:block}
+.card .more{font-size:12px;color:var(--red);margin-top:10px;font-weight:700}
+/* TIMELINE */
+.tl{position:relative;margin-left:14px;padding-left:30px;border-left:3px solid var(--red)}
+.tl .ev{position:relative;margin-bottom:26px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;box-shadow:0 3px 10px rgba(0,0,0,.05)}
+.tl .ev::before{content:"";position:absolute;left:-39px;top:20px;width:15px;height:15px;border-radius:50%;background:var(--red);border:3px solid #fff;box-shadow:0 0 0 2px var(--red)}
+.tl .ev b{color:var(--red)}
+.tl .ev .w{font-size:12px;font-weight:800;color:var(--gray2);letter-spacing:1px}
+.tl .ev p{font-size:13.5px;margin-top:6px;color:#3f3f46}
+/* TABLES */
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.05);font-size:13.5px}
+th{background:var(--gray);color:#fff;text-align:left;padding:11px 14px;font-size:13px}
+td{padding:10px 14px;border-top:1px solid var(--line);color:#3f3f46}
+tr:nth-child(even) td{background:#fafafa}
+td.r{color:var(--red);font-weight:700}
+/* BARS */
+.bars .row{margin-bottom:16px}
+.bars .lbl{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px;color:var(--gray)}
+.bars .lbl b{color:var(--red)}
+.bar{height:12px;background:#e7e7e9;border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gray),var(--red));border-radius:6px;width:0;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.footer{margin-top:40px;padding-top:16px;border-top:2px solid var(--red);font-size:12px;color:var(--gray2);font-style:italic}
+/* CINEMATIC INTRO (autoplay - video mode) */
+#intro{position:fixed;inset:0;z-index:55;background:#060607;overflow:hidden;transition:opacity .9s ease}
+#intro.done{opacity:0;pointer-events:none}
+#intro::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:
+ repeating-linear-gradient(0deg,rgba(224,43,43,.05) 0 1px,transparent 1px 90px),
+ repeating-linear-gradient(90deg,rgba(224,43,43,.05) 0 1px,transparent 1px 90px),
+ radial-gradient(120% 120% at 50% 50%,transparent 55%,rgba(0,0,0,.65) 100%)}
+#intro .hud{position:absolute;border:1px dashed rgba(224,43,43,.35);border-radius:50%;z-index:2;pointer-events:none;animation:spinz 32s linear infinite}
+#intro .hudL{width:440px;height:440px;left:-190px;top:50%;margin-top:-220px}
+#intro .hudR{width:520px;height:520px;right:-230px;top:50%;margin-top:-260px;animation-direction:reverse;animation-duration:40s}
+#intro .hud::after{content:"";position:absolute;inset:26px;border:1px solid rgba(224,43,43,.22);border-radius:50%;border-top-color:rgba(224,43,43,.7)}
+#fx{position:absolute;inset:0;z-index:4;pointer-events:none}
+#intro .wrap{position:absolute;inset:0}
+#intro .slide{position:absolute;inset:0;height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0a0a0c;color:#ececee;
+ opacity:0;transform:translateX(55%) rotate(14deg) scale(.9);transform-origin:50% 130%;
+ transition:opacity .9s ease,transform 1.25s cubic-bezier(.2,.75,.25,1);pointer-events:none;z-index:1}
+#intro .slide.on{opacity:1;transform:none;z-index:3;pointer-events:auto}
+#intro .slide.off{opacity:0;transform:translateX(-55%) rotate(-14deg) scale(.9)}
+#intro .slide.on .sl-bg{animation:kenburns 6.5s linear forwards}
+@keyframes kenburns{from{transform:scale(1.2) translate(2%,1.5%)}to{transform:scale(1.02) translate(-1%,-1%)}}
+#intro .slide.on .sl-inner{animation:innerin 1.15s cubic-bezier(.2,.8,.3,1) both}
+@keyframes innerin{from{opacity:0;transform:translateY(70px) rotate(-4deg) scale(.9)}to{opacity:1;transform:none}}
+#iprog{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:6}
+#iprog i{width:56px;height:4px;background:rgba(255,255,255,.16);border-radius:2px;overflow:hidden;position:relative;display:block}
+#iprog i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--red);border-radius:2px}
+#iprog i.fill::after{width:100%}
+#iprog i.act::after{animation:fillbar 5.2s linear forwards}
+@keyframes fillbar{from{width:0}to{width:100%}}
+#intro .sl-hint{display:none}
+.sl-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+/* scene props */
+.rays{position:absolute;left:50%;top:50%;width:150vmax;height:150vmax;margin:-75vmax 0 0 -75vmax;border-radius:50%;
+ background:repeating-conic-gradient(rgba(224,43,43,.055) 0 5deg,transparent 5deg 17deg);
+ animation:spinz 70s linear infinite;pointer-events:none}
+.flare{position:relative;height:2px;width:64%;margin:16px auto 0;background:linear-gradient(90deg,transparent,#ff5a5a 30%,#fff 50%,#ff5a5a 70%,transparent);box-shadow:0 0 18px rgba(255,80,80,.9);animation:flarep 2.6s ease-in-out infinite}
+@keyframes flarep{0%,100%{opacity:.55;transform:scaleX(.92)}50%{opacity:1;transform:scaleX(1)}}
+.sl-logo{position:relative;overflow:hidden}
+.sl-logo::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.45) 50%,transparent 58%);transform:translateX(-120%);animation:sweep 3.6s ease-in-out infinite}
+@keyframes sweep{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.streak{position:absolute;width:2px;height:130px;background:linear-gradient(transparent,#ff5a5a,transparent);transform:rotate(35deg);z-index:2;pointer-events:none;opacity:0;animation:streakfall 5s linear infinite}
+.streak.k2{animation-delay:1.7s}.streak.k3{animation-delay:3.4s}
+@keyframes streakfall{0%{opacity:0;transform:rotate(35deg) translateY(-45vh)}12%{opacity:.9}30%{opacity:0;transform:rotate(35deg) translateY(45vh)}100%{opacity:0;transform:rotate(35deg) translateY(45vh)}}
+.s-3 .sl-card{position:relative}
+.s-3 .sl-card::after{content:"";position:absolute;top:10px;left:50%;width:66px;height:66px;margin-left:-33px;border:1px dashed rgba(255,77,77,.45);border-radius:50%;animation:spinz 11s linear infinite}
+.jet{position:absolute;z-index:2;pointer-events:none;filter:drop-shadow(0 0 8px rgba(255,90,90,.8))}
+.skyline{position:absolute;left:0;right:0;bottom:0;width:100%;z-index:1;opacity:.55;pointer-events:none}
+.landmass{fill:#1a1a1f;stroke:#3d3d46;stroke-width:1;filter:drop-shadow(0 0 6px rgba(224,43,43,.15))}
+.turkey{fill:#c1121f;stroke:#ff5a5a;stroke-width:1.2;filter:drop-shadow(0 0 14px rgba(224,43,43,.9));animation:glowPulse 3s ease-in-out infinite}
+.s-1 .sl-bg{background-image:url('acilis-1.jpg')}
+.s-2 .sl-bg{background-image:url('acilis-2.jpg')}
+.s-3 .sl-bg{background-image:url('acilis-3.jpg')}
+.s-4 .sl-bg{background-image:url('acilis-4.jpg')}
+.sl-shade{position:absolute;inset:0;background:radial-gradient(90% 90% at 50% 100%,rgba(211,47,47,.16) 0%,transparent 55%),linear-gradient(#0009,#0006 30%,#000a)}
+.sl-glow{position:absolute;left:50%;bottom:-30vh;transform:translateX(-50%);width:90vw;height:90vw;border-radius:50%;background:radial-gradient(circle,rgba(211,47,47,.30),transparent 62%);filter:blur(24px);pointer-events:none}
+.sl-inner{position:relative;z-index:2;text-align:center;padding:30px 22px;max-width:1000px;will-change:transform,opacity}
+.sl-logo{font-weight:800;font-size:56px;letter-spacing:2px}
+.sl-logo .t{color:#f2f2f4}.sl-logo .p{color:#e02b2b}
+.sl-logo .r{height:4px;background:#fff;opacity:.85;width:72%;margin:10px auto 10px;border-radius:2px}
+.sl-logo .i{color:#e6e6e9;font-size:22px;letter-spacing:.55em;font-weight:400;text-indent:.55em}
+.sl-sub{margin-top:22px;font-style:italic;font-size:19px;color:#dcdcdf}
+.sl-kicker{color:#e02b2b;font-weight:800;letter-spacing:.22em;font-size:13px;margin-bottom:14px}
+.sl-title{font-size:42px;font-weight:800;line-height:1.12;color:#f4f4f6}
+.sl-title .red{color:#e02b2b}
+.sl-badge{width:150px;height:150px;border-radius:50%;border:2px solid #e02b2b;background:rgba(224,43,43,.07);box-shadow:0 0 40px rgba(224,43,43,.35),inset 0 0 30px rgba(224,43,43,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:26px auto 0}
+.sl-badge b{font-size:40px;color:#fff}
+.sl-badge span{font-size:11px;color:#d8d8db;letter-spacing:.14em;margin-top:4px;line-height:1.5}
+.sl-map{width:min(640px,88vw);margin:6px auto 0;display:block}
+.sl-cards{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:14px;margin-top:30px}
+@media(max-width:720px){.sl-cards{grid-template-columns:1fr 1fr}}
+.sl-card{background:rgba(255,255,255,.045);border:1px solid #3a2a2c;border-radius:16px;padding:22px 12px;backdrop-filter:blur(3px)}
+.sl-card .xic{width:34px;height:34px;stroke:#ff4d4d;margin-bottom:12px}
+.sl-card b{display:block;font-size:15px;letter-spacing:.08em;color:#fff}
+.sl-card span{display:block;font-size:11px;color:#b9b9bd;margin-top:7px;line-height:1.5;letter-spacing:.04em}
+.sl-stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.sl-stat{min-width:150px;background:linear-gradient(160deg,rgba(224,43,43,.16),rgba(0,0,0,.5));border:1px solid #e02b2b;border-radius:14px;padding:18px 22px;box-shadow:0 0 24px rgba(224,43,43,.2)}
+.sl-stat b{display:block;font-size:34px;color:#fff}
+.sl-stat span{font-size:12px;color:#e0e0e3;letter-spacing:.1em}
+.sl-hint{position:absolute;bottom:26px;left:0;right:0;text-align:center;z-index:3;color:#d8d8db;font-size:12px;letter-spacing:.25em;animation:hintbob 1.6s ease-in-out infinite}
+.sl-hint::after{content:"▼";display:block;color:#e02b2b;margin-top:6px;font-size:15px}
+@keyframes hintbob{0%,100%{transform:translateY(0);opacity:.75}50%{transform:translateY(7px);opacity:1}}
+/* live micro-animations */
+.sl-inner{transition:transform .3s cubic-bezier(.2,.8,.3,1),opacity .3s ease}
+@keyframes glowPulse{0%,100%{opacity:.7}50%{opacity:1}}
+.sl-glow{animation:glowPulse 4.5s ease-in-out infinite}
+@keyframes draw{to{stroke-dashoffset:0}}
+.s-2 .arc{stroke-dasharray:1;stroke-dashoffset:1}
+.slide.play .arc{animation:draw 1.5s ease forwards}
+.slide.play .arc:nth-child(2){animation-delay:.15s}.slide.play .arc:nth-child(3){animation-delay:.3s}
+.slide.play .arc:nth-child(4){animation-delay:.45s}.slide.play .arc:nth-child(5){animation-delay:.6s}
+.slide.play .arc:nth-child(6){animation-delay:.75s}
+@keyframes dotpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.65}}
+.s-2 .dot{transform-box:fill-box;transform-origin:center;animation:dotpulse 2.2s ease-in-out infinite}
+.s-2 .dot:nth-child(2){animation-delay:.3s}.s-2 .dot:nth-child(3){animation-delay:.6s}
+.s-2 .dot:nth-child(4){animation-delay:.9s}.s-2 .dot:nth-child(5){animation-delay:1.2s}.s-2 .dot:nth-child(6){animation-delay:1.5s}
+@keyframes ringx{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2);opacity:0}}
+.s-2 .ring{transform-box:fill-box;transform-origin:center;animation:ringx 2.6s ease-out infinite}
+.s-2 .ring.r2{animation-delay:1.3s}
+.sl-badge{position:relative}
+.sl-badge::after{content:"";position:absolute;inset:-11px;border-radius:50%;border:1.5px dashed rgba(224,43,43,.55);animation:spinz 14s linear infinite}
+@keyframes spinz{to{transform:rotate(360deg)}}
+@keyframes cardbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.slide.play .sl-card{animation:cardbob 4.2s ease-in-out infinite}
+.slide.play .sl-card:nth-child(2){animation-delay:.5s}.slide.play .sl-card:nth-child(3){animation-delay:1s}
+.slide.play .sl-card:nth-child(4){animation-delay:1.5s}
+@keyframes icpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.sl-card .xic{animation:icpulse 2.8s ease-in-out infinite}
+.s-4 .bar{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0)}
+.slide.play .bar{animation:barup .7s cubic-bezier(.2,.8,.3,1) forwards}
+.slide.play .bar:nth-child(1){animation-delay:.05s}.slide.play .bar:nth-child(2){animation-delay:.15s}
+.slide.play .bar:nth-child(3){animation-delay:.25s}.slide.play .bar:nth-child(4){animation-delay:.35s}
+.slide.play .bar:nth-child(5){animation-delay:.45s}.slide.play .bar:nth-child(6){animation-delay:.55s}
+.slide.play .bar:nth-child(7){animation-delay:.65s}.slide.play .bar:nth-child(8){animation-delay:.75s}
+.slide.play .bar:nth-child(9){animation-delay:.85s}.slide.play .bar:nth-child(10){animation-delay:.95s}
+@keyframes barup{to{transform:scaleY(1)}}
+.s-4 .apath{stroke-dasharray:1;stroke-dashoffset:1}
+.slide.play .apath{animation:draw 1.6s .7s ease forwards}
+.slide.play .apath.ap2{animation-delay:2s;animation-duration:.4s}
+.sl-stat{transition:box-shadow .3s}
+.slide.play .sl-stat{animation:statglow 3.4s ease-in-out infinite}
+.slide.play .sl-stat:nth-child(2){animation-delay:.6s}.slide.play .sl-stat:nth-child(3){animation-delay:1.2s}
+@keyframes statglow{0%,100%{box-shadow:0 0 24px rgba(224,43,43,.2)}50%{box-shadow:0 0 44px rgba(224,43,43,.55)}}
+#skipIntro{position:fixed;top:16px;right:16px;z-index:60;background:rgba(0,0,0,.55);color:#fff;border:1px solid rgba(255,255,255,.35);padding:9px 20px;border-radius:22px;font-size:13px;cursor:pointer;backdrop-filter:blur(4px)}
+#skipIntro:hover{background:var(--red);border-color:var(--red)}
+.sl-arrow{width:min(560px,80vw);margin:0 auto 6px;display:block}
+@media(max-width:640px){
+  .sl-logo{font-size:36px}.sl-logo .i{font-size:14px}
+  .sl-title{font-size:26px}.sl-sub{font-size:15px}
+  .sl-badge{width:118px;height:118px}.sl-badge b{font-size:30px}
+  .sl-stat b{font-size:26px}
+}
+/* EXEC SUMMARY (dark) */
+.exec{background:radial-gradient(120% 140% at 85% 0%,#2a1113 0%,#141114 45%,#0c0c0e 100%);border:1px solid #2a2a2e;border-radius:20px;padding:30px 28px;color:#e8e8ea;box-shadow:0 14px 40px rgba(0,0,0,.35);position:relative;overflow:hidden}
+.exec::after{content:"";position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(196,34,34,.28),transparent 70%)}
+.exec .xhead{position:relative;z-index:1}
+.xlogo{font-weight:800;font-size:26px;letter-spacing:1px}
+.xlogo .t{color:#d6d6d8}.xlogo .p{color:#d32f2f}
+.xlogo .xr{height:3px;background:#6d6e71;width:190px;margin:5px 0 4px;border-radius:2px}
+.xlogo .xi{color:#9a9a9e;font-size:11px;letter-spacing:.5em;font-weight:400}
+.exec h2{margin-top:18px;font-size:30px;line-height:1.15;color:#f2f2f4;letter-spacing:.5px}
+.exec h2 span{color:#e04040}
+.xsub{margin-top:10px;color:#a8a8ac;font-size:13.5px}
+.xbadge{position:absolute;top:0;right:0;width:110px;height:110px;border-radius:50%;border:2px solid #d32f2f;background:rgba(211,47,47,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:1}
+.xbadge b{font-size:26px;color:#fff}
+.xbadge span{font-size:9px;color:#c9c9cd;letter-spacing:.08em;margin-top:3px;line-height:1.5}
+.xgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:26px;position:relative;z-index:1}
+.xbox{background:rgba(255,255,255,.04);border:1px solid #2e2e33;border-radius:14px;padding:18px}
+.xt{color:#e04040;font-weight:800;font-size:13px;letter-spacing:.12em}
+.xstage{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-size:13.5px;color:#cfcfd3}
+.xstage b{color:#e04040}
+.xstage i{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:2px solid #d32f2f;color:#fff;font-style:normal;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.xsec{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.06em;color:#d6d6d8}
+.xsec div{background:rgba(0,0,0,.35);border:1px solid #333338;border-radius:10px;padding:12px 8px;text-align:center}
+.xic{width:26px;height:26px;stroke:#e04040;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 8px}
+.xstat{margin-top:12px;font-size:14px;color:#cfcfd3}
+.xstat b{color:#fff;font-size:20px;margin-right:6px}
+.xtargets{margin-top:22px;position:relative;z-index:1}
+.xtgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.xtgrid div{background:linear-gradient(160deg,rgba(211,47,47,.14),rgba(0,0,0,.4));border:1px solid #3a2325;border-radius:12px;padding:16px 10px;text-align:center}
+.xtgrid b{display:block;font-size:26px;color:#fff}
+.xtgrid span{font-size:11px;color:#b5b5b9;letter-spacing:.12em}
+.xroad{margin-top:22px;position:relative;z-index:1}
+.xrgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:10px}
+.xrgrid div{text-align:center;position:relative;padding-top:4px}
+.xrgrid i{display:block;width:14px;height:14px;border-radius:50%;background:#d32f2f;margin:0 auto 8px;box-shadow:0 0 0 4px rgba(211,47,47,.2)}
+.xrgrid b{display:block;color:#e04040;font-size:15px}
+.xrgrid span{font-size:11px;color:#a8a8ac;line-height:1.4;display:block;margin-top:3px}
+.xbanner{margin-top:24px;background:rgba(211,47,47,.1);border:1px solid #d32f2f;border-radius:12px;padding:13px 18px;text-align:center;font-size:13px;color:#e8e8ea;letter-spacing:.06em;position:relative;z-index:1}
+.xbanner b{color:#ff5a5a}
+@media(max-width:640px){
+  .exec{padding:22px 16px}
+  .exec h2{font-size:22px;padding-right:0;margin-top:80px}
+  .xbadge{width:92px;height:92px}.xbadge b{font-size:21px}
+  .xlogo .xr{width:150px}
+}
+/* ICONS & DECOR */
+.ichip{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,rgba(163,29,29,.10),rgba(88,89,91,.10));display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex:0 0 auto}
+.ichip.sm{width:36px;height:36px;border-radius:10px;margin-bottom:0}
+.ic{width:24px;height:24px;stroke:var(--red);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ichip.sm .ic{width:19px;height:19px}
+.thead{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.thead h3.title{margin-bottom:0}
+.ev .evh{display:flex;align-items:center;gap:10px}
+.ev .evh .ichip.sm{background:rgba(163,29,29,.08)}
+#hero{position:relative;overflow:hidden}
+#hero>*{position:relative;z-index:1}
+#hero .blob{position:absolute;border-radius:50%;filter:blur(70px);z-index:0;animation:float 10s ease-in-out infinite}
+.b1{width:420px;height:420px;background:rgba(163,29,29,.20);top:-120px;left:-100px}
+.b2{width:520px;height:520px;background:rgba(88,89,91,.20);bottom:-180px;right:-140px;animation-delay:2s}
+.b3{width:220px;height:220px;background:rgba(163,29,29,.14);top:40%;right:12%;animation-delay:4s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-36px) scale(1.06)}}
+/* ANIMATIONS */
+@keyframes fadeup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 6px 20px rgba(163,29,29,.35)}50%{box-shadow:0 6px 30px rgba(163,29,29,.65)}}
+@keyframes ring{0%{box-shadow:0 0 0 2px var(--red)}50%{box-shadow:0 0 0 6px rgba(163,29,29,.25)}100%{box-shadow:0 0 0 2px var(--red)}}
+@keyframes rollinL{0%{opacity:0;transform:translateX(-140px) rotate(-360deg)}100%{opacity:1;transform:none}}
+@keyframes rollinR{0%{opacity:0;transform:translateX(140px) rotate(360deg)}100%{opacity:1;transform:none}}
+@keyframes rollcard{0%{opacity:0;transform:translateY(80px) rotate(-20deg) scale(.75)}60%{opacity:1;transform:translateY(-8px) rotate(5deg) scale(1.03)}100%{opacity:1;transform:none}}
+@keyframes rollcta{0%{opacity:0;transform:translateY(60px) rotate(360deg) scale(.5)}70%{transform:translateY(-4px) rotate(-6deg) scale(1.05)}100%{opacity:1;transform:none}}
+@keyframes tickmove{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+#hero .logo{animation:rollinL 1s cubic-bezier(.2,.8,.3,1) both}
+#hero .logo .rule{animation:grow .9s .55s both;transform-origin:center}
+#hero h1{animation:rollinR .85s cubic-bezier(.2,.8,.3,1) .3s both}
+#hero h2{animation:rollinL .85s cubic-bezier(.2,.8,.3,1) .45s both}
+#hero .sub{animation:fadeup .6s .65s both}
+#hero .stat{animation:rollcard .75s cubic-bezier(.2,.8,.3,1) both}
+#hero .stat:nth-child(1){animation-delay:.75s}#hero .stat:nth-child(2){animation-delay:.9s}
+#hero .stat:nth-child(3){animation-delay:1.05s}#hero .stat:nth-child(4){animation-delay:1.2s}
+#hero .cta{animation:rollcta .9s cubic-bezier(.2,.8,.3,1) 1.4s both,pulse 2.4s 2.6s infinite}
+.ticker{position:absolute;bottom:0;left:0;right:0;background:var(--red);overflow:hidden;display:flex;padding:11px 0;z-index:1;animation:fadeup .6s 1.7s both}
+.ticker .tk{flex:0 0 auto;white-space:nowrap;color:#fff;font-weight:700;letter-spacing:.18em;font-size:12.5px;animation:tickmove 22s linear infinite}
+.anim{opacity:0}
+.page.show .anim{animation:fadeup .55s cubic-bezier(.2,.7,.2,1) both}
+.tl .ev::before{animation:ring 2.6s infinite}
+.tab.act{transition:background .25s}
+/* RESPONSIVE */
+@media(max-width:640px){
+  #hero .logo .l1{font-size:42px}#hero .logo .l2{font-size:16px}
+  #hero h1{font-size:22px}#hero .stats{gap:14px}.stat{min-width:130px;padding:14px 20px}
+  h3.title{font-size:22px}
+  table.resp{background:none;box-shadow:none;border-radius:0}
+  table.resp tr:first-child{display:none}
+  table.resp,table.resp tbody,table.resp tr,table.resp td{display:block;width:100%}
+  table.resp tr{margin-bottom:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.05)}
+  table.resp tr:nth-child(even) td{background:#fff}
+  table.resp td{border:none;border-top:1px solid #f4f4f5;display:flex;justify-content:space-between;gap:14px;text-align:right}
+  table.resp td::before{content:attr(data-l);font-weight:700;color:var(--gray);text-align:left;flex:0 0 42%}
+  table.resp td:first-child{background:var(--gray)!important;color:#fff;font-weight:700;text-align:left;border-top:none}
+  table.resp td:first-child::before{content:none}
+}
+</style>
+</head>
+<body>
+
+<button id="skipIntro" onclick="skipIntro()">Girişi Atla →</button>
+<div id="intro">
+  <div class="wrap"><section class="slide s-1">
+    <div class="sl-bg"></div><div class="rays"></div><div class="sl-shade"></div><div class="sl-glow"></div>
+    <div class="streak" style="left:22%"></div><div class="streak k2" style="left:64%"></div><div class="streak k3" style="left:84%"></div>
+    <div class="sl-inner">
+      <div class="sl-logo"><span class="t">T<span style="font-size:.78em">URK</span></span><span class="p">P<span style="font-size:.78em">OWER</span></span>
+        <div class="r"></div><div class="i">INVESTMENT</div></div>
+      <div class="flare"></div>
+      <div class="sl-sub">Türkiye'den Dünyaya Stratejik Büyüme</div>
+    </div>
+    <div class="sl-hint">KAYDIRIN</div>
+  </section></div>
+
+  <div class="wrap"><section class="slide s-2">
+    <div class="sl-bg"></div><div class="sl-shade"></div><div class="sl-glow"></div>
+    <div class="sl-inner">
+      <div class="sl-kicker">AVRUPA TÜRK DİASPORASI</div>
+      <div class="sl-title">DÜNYAYA YAYILAN<br><span class="red">TÜRK SERMAYESİ</span></div>
+      <svg class="sl-map" viewBox="0 0 640 330">
+        <!-- sermaye hatları -->
+        <g stroke="#ff4545" fill="none" stroke-width="1.7" opacity=".9">
+          <path class="arc" pathLength="1" d="M487 258 C 420 120, 260 70, 148 90"/>
+          <path class="arc" pathLength="1" d="M487 258 C 430 140, 300 110, 196 136"/>
+          <path class="arc" pathLength="1" d="M487 258 C 440 130, 350 80, 285 100"/>
+          <path class="arc" pathLength="1" d="M487 258 C 470 120, 400 50, 322 44"/>
+          <path class="arc" pathLength="1" d="M487 258 C 400 190, 250 180, 106 242"/>
+          <path class="arc" pathLength="1" d="M487 258 C 440 190, 340 160, 298 242"/>
+          <path class="arc" pathLength="1" d="M487 258 C 450 170, 360 150, 312 150"/>
+        </g>
+        <!-- şehir noktaları -->
+        <g fill="#ff6b6b">
+          <circle class="dot" cx="148" cy="90" r="5"/><circle class="dot" cx="196" cy="136" r="4.5"/>
+          <circle class="dot" cx="285" cy="100" r="5"/><circle class="dot" cx="322" cy="44" r="4"/>
+          <circle class="dot" cx="106" cy="242" r="4.5"/><circle class="dot" cx="298" cy="242" r="4"/>
+          <circle class="dot" cx="312" cy="150" r="4"/>
+        </g>
+        <!-- akan sermaye partikülleri -->
+        <circle r="3.4" fill="#ffb0b0"><animateMotion dur="2.5s" repeatCount="indefinite" path="M487 258 C 420 120, 260 70, 148 90"/></circle>
+        <circle r="3" fill="#ffb0b0"><animateMotion dur="3s" begin="0.5s" repeatCount="indefinite" path="M487 258 C 440 130, 350 80, 285 100"/></circle>
+        <circle r="3" fill="#ffb0b0"><animateMotion dur="2.8s" begin="1s" repeatCount="indefinite" path="M487 258 C 400 190, 250 180, 106 242"/></circle>
+        <circle r="2.6" fill="#ffb0b0"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite" path="M487 258 C 470 120, 400 50, 322 44"/></circle>
+        <circle r="2.6" fill="#ffb0b0"><animateMotion dur="2.6s" begin="2s" repeatCount="indefinite" path="M487 258 C 430 140, 300 110, 196 136"/></circle>
+        <!-- hub -->
+        <circle cx="487" cy="258" r="8" fill="#ff3b3b"/>
+        <circle class="ring" cx="487" cy="258" r="15" fill="none" stroke="#e02b2b"/>
+        <circle class="ring r2" cx="487" cy="258" r="15" fill="none" stroke="#e02b2b"/>
+      </svg>
+      <div class="sl-badge"><b data-cnt="7" data-suf="M+">0M+</b><span>TÜRK<br>DİASPORASI</span></div>
+    </div>
+  </section></div>
+
+  <div class="wrap"><section class="slide s-3">
+    <div class="sl-bg"></div><div class="sl-shade"></div><div class="sl-glow"></div>
+    <div class="streak" style="left:30%"></div><div class="streak k2" style="left:75%"></div>
+    <svg class="jet" style="left:0;top:0;width:100%;height:100%" viewBox="0 0 1000 600" preserveAspectRatio="none">
+      <g>
+        <path d="M26 0 L-8 -9 L-2 0 L-8 9 Z" fill="#ff9a9a"/>
+        <rect x="-108" y="-1.2" width="96" height="2.4" rx="1.2" fill="url(#trail)"/>
+        <animateMotion dur="8.5s" repeatCount="indefinite" rotate="auto"
+          path="M -80 470 C 250 380, 520 300, 1080 130"/>
+      </g>
+      <defs><linearGradient id="trail" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="rgba(255,90,90,0)"/><stop offset="1" stop-color="rgba(255,90,90,.85)"/></linearGradient></defs>
+    </svg>
+    <div class="sl-inner">
+      <div class="sl-title">STRATEJİK <span class="red">SEKTÖRLER</span></div>
+      <div class="sl-cards">
+        <div class="sl-card"><svg class="xic" viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg><b>HAVACILIK</b><span>YÜKSEK TEKNOLOJİ<br>GÜÇLÜ GELECEK</span></div>
+        <div class="sl-card"><svg class="xic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><b>SAVUNMA</b><span>GÜVENLİKTE YERLİ GÜÇ<br>KÜRESEL ETKİ</span></div>
+        <div class="sl-card"><svg class="xic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg><b>TEKNOLOJİ</b><span>YENİLİKÇİ TEKNOLOJİLER<br>DİJİTAL DÖNÜŞÜM</span></div>
+        <div class="sl-card"><svg class="xic" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><b>ENERJİ &amp; MADEN</b><span>SÜRDÜRÜLEBİLİR ENERJİ<br>STRATEJİK KAYNAKLAR</span></div>
+      </div>
+    </div>
+  </section></div>
+
+  <div class="wrap"><section class="slide s-4">
+    <div class="sl-bg"></div><div class="sl-shade"></div><div class="sl-glow"></div>
+    <div class="streak" style="left:18%"></div><div class="streak k3" style="left:70%"></div>
+    <svg class="skyline" viewBox="0 0 1200 190" preserveAspectRatio="none">
+      <g fill="#131316" stroke="#26262b" stroke-width="1">
+        <rect x="0" y="90" width="70" height="100"/><rect x="80" y="60" width="55" height="130"/>
+        <rect x="145" y="110" width="65" height="80"/><rect x="220" y="40" width="48" height="150"/>
+        <rect x="278" y="95" width="70" height="95"/><rect x="360" y="70" width="42" height="120"/>
+        <rect x="412" y="120" width="80" height="70"/><rect x="700" y="105" width="72" height="85"/>
+        <rect x="782" y="55" width="46" height="135"/><rect x="838" y="90" width="66" height="100"/>
+        <rect x="914" y="35" width="52" height="155"/><rect x="976" y="100" width="70" height="90"/>
+        <rect x="1056" y="70" width="48" height="120"/><rect x="1114" y="110" width="70" height="80"/>
+      </g>
+      <g fill="#ff5a5a">
+        <rect x="232" y="55" width="5" height="5"><animate attributeName="opacity" values="1;.2;1" dur="2.1s" repeatCount="indefinite"/></rect>
+        <rect x="794" y="70" width="5" height="5"><animate attributeName="opacity" values=".3;1;.3" dur="2.8s" repeatCount="indefinite"/></rect>
+        <rect x="926" y="50" width="5" height="5"><animate attributeName="opacity" values="1;.25;1" dur="1.7s" repeatCount="indefinite"/></rect>
+        <rect x="94" y="75" width="5" height="5"><animate attributeName="opacity" values=".4;1;.4" dur="2.4s" repeatCount="indefinite"/></rect>
+        <rect x="1068" y="85" width="5" height="5"><animate attributeName="opacity" values="1;.3;1" dur="3.1s" repeatCount="indefinite"/></rect>
+      </g>
+    </svg>
+    <div class="sl-inner">
+      <div class="sl-kicker">TÜRKİYE'DEN DÜNYAYA STRATEJİK BÜYÜME</div>
+      <svg class="sl-arrow" viewBox="0 0 600 170">
+        <defs><linearGradient id="ag" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#7d1414"/><stop offset="1" stop-color="#ff4040"/></linearGradient></defs>
+        <g fill="url(#ag)" opacity=".8">
+          <rect class="bar" x="20" y="150" width="26" height="12" rx="2"/><rect class="bar" x="60" y="142" width="26" height="20" rx="2"/>
+          <rect class="bar" x="100" y="132" width="26" height="30" rx="2"/><rect class="bar" x="140" y="120" width="26" height="42" rx="2"/>
+          <rect class="bar" x="180" y="106" width="26" height="56" rx="2"/><rect class="bar" x="220" y="90" width="26" height="72" rx="2"/>
+          <rect class="bar" x="260" y="72" width="26" height="90" rx="2"/><rect class="bar" x="300" y="52" width="26" height="110" rx="2"/>
+          <rect class="bar" x="340" y="30" width="26" height="132" rx="2"/><rect class="bar" x="380" y="6" width="26" height="156" rx="2"/>
+        </g>
+        <path class="apath" pathLength="1" d="M20 158 C 220 150, 420 110, 545 18" stroke="#ff3b3b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path class="apath ap2" pathLength="1" d="M545 18 l-30 2 M545 18 l-6 28" stroke="#ff3b3b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle r="4.5" fill="#ffb3b3"><animateMotion dur="3.2s" begin="2s" repeatCount="indefinite" path="M20 158 C 220 150, 420 110, 545 18"/></circle>
+      </svg>
+      <div class="sl-stats">
+        <div class="sl-stat"><b data-cnt="15">0</b><span>PROJE</span></div>
+        <div class="sl-stat"><b data-cnt="23.15" data-dec="2" data-suf=" M$">0</b><span>BÜTÇE</span></div>
+        <div class="sl-stat"><b data-cnt="2032" data-from="2026">2026</b><span>GLOBAL BÜYÜME</span></div>
+      </div>
+    </div>
+  </section></div>
+  <canvas id="fx"></canvas>
+  <div class="hud hudL"></div><div class="hud hudR"></div>
+  <div id="iprog"><i></i><i></i><i></i><i></i></div>
+</div>
+<div id="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="logo">
+    <div class="l1"><span class="t">T<span style="font-size:.78em">URK</span></span><span class="p">P<span style="font-size:.78em">OWER</span></span></div>
+    <div class="rule"></div>
+    <div class="l2">INVESTMENT</div>
+  </div>
+  <h1>Marketing, Kreatif ve Yatırımcı Dokümantasyonu</h1>
+  <h2>Hasan Bayram — Katkı Planı</h2>
+  <div class="sub">Aykut Ferah'ın onayına sunulmak üzere · Temmuz 2026</div>
+  <div class="stats">
+    <div class="stat"><div class="n" data-n="7">0</div><div class="d">İş Kolu</div></div>
+    <div class="stat"><div class="n" data-n="6">0</div><div class="d">Aylık Uygulama Takvimi</div></div>
+    <div class="stat"><div class="n" data-n="25">0</div><div class="d">Somut Çıktı</div></div>
+    <div class="stat"><div class="n" data-n="3">0</div><div class="d">Dil (TR / DE / EN)</div></div>
+  </div>
+  <button class="cta" onclick="start()">Planı İncele →</button>
+  <div class="ticker">
+    <div class="tk">&nbsp;MARKA &amp; KİMLİK&nbsp;&nbsp;·&nbsp;&nbsp;WEB SİTELERİ&nbsp;&nbsp;·&nbsp;&nbsp;VİDEO PRODÜKSİYON&nbsp;&nbsp;·&nbsp;&nbsp;DİJİTAL PAZARLAMA&nbsp;&nbsp;·&nbsp;&nbsp;BASIN &amp; PR&nbsp;&nbsp;·&nbsp;&nbsp;YATIRIMCI DOKÜMANTASYONU&nbsp;&nbsp;·&nbsp;&nbsp;GÖRÜŞME DESTEĞİ&nbsp;&nbsp;·&nbsp;</div>
+    <div class="tk">&nbsp;MARKA &amp; KİMLİK&nbsp;&nbsp;·&nbsp;&nbsp;WEB SİTELERİ&nbsp;&nbsp;·&nbsp;&nbsp;VİDEO PRODÜKSİYON&nbsp;&nbsp;·&nbsp;&nbsp;DİJİTAL PAZARLAMA&nbsp;&nbsp;·&nbsp;&nbsp;BASIN &amp; PR&nbsp;&nbsp;·&nbsp;&nbsp;YATIRIMCI DOKÜMANTASYONU&nbsp;&nbsp;·&nbsp;&nbsp;GÖRÜŞME DESTEĞİ&nbsp;&nbsp;·&nbsp;</div>
+  </div>
+</div>
+
+<nav id="nav"><div class="in">
+  <div class="logo mini"><div class="l1"><span class="t">T<span style="font-size:.78em">URK</span></span><span class="p">P<span style="font-size:.78em">OWER</span></span></div><div class="rule"></div><div class="l2">INVESTMENT</div></div>
+  <button class="tab act" data-s="s0">Yönetici Özeti</button>
+  <button class="tab" data-s="s1">İş Kolları</button>
+  <button class="tab" data-s="s2">Takvim</button>
+  <button class="tab" data-s="s3">Bütçe</button>
+  <button class="tab" data-s="s4">KPI</button>
+  <button class="tab" data-s="s5">Sorumluluk</button>
+  <button class="tab" data-s="s6">Riskler</button>
+</div></nav>
+
+<main id="main" style="display:none">
+
+<section class="page show" id="s0">
+  <div class="exec">
+    <div class="xhead">
+      <div class="xlogo"><span class="t">T<span style="font-size:.78em">URK</span></span><span class="p">P<span style="font-size:.78em">OWER</span></span><div class="xr"></div><div class="xi">INVESTMENT</div></div>
+      <h2>AVRUPA TÜRK DİASPORASI<br><span>YATIRIM FONU GİRİŞİMİ</span></h2>
+      <div class="xsub">TurkPower Investment Holding &nbsp;|&nbsp; 2027–2032 &nbsp;·&nbsp; Türkiye'den dünyaya stratejik büyüme</div>
+      <div class="xbadge"><b>7M+</b><span>AVRUPA TÜRK<br>DİASPORASI</span></div>
+    </div>
+    <div class="xgrid">
+      <div class="xbox">
+        <div class="xt">2 AŞAMALI BÜYÜME MODELİ</div>
+        <div class="xstage"><i>1</i><div><b>2027–2029</b><br>Türkiye'de iç değer yaratımı</div></div>
+        <div class="xstage"><i>2</i><div><b>2029–2032</b><br>Almanya'da kote fon ile küresel ölçeklenme</div></div>
+      </div>
+      <div class="xbox">
+        <div class="xt">STRATEJİK SEKTÖRLER</div>
+        <div class="xsec">
+          <div><svg class="xic" viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>HAVACILIK</div>
+          <div><svg class="xic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SAVUNMA</div>
+          <div><svg class="xic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>TEKNOLOJİ</div>
+          <div><svg class="xic" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>ENERJİ &amp; MADEN</div>
+        </div>
+      </div>
+      <div class="xbox">
+        <div class="xt">İLK PROGRAM</div>
+        <div class="xstat"><b>15</b> proje</div>
+        <div class="xstat"><b>23,15 M$</b> bütçe</div>
+        <div class="xstat"><b>100</b> uçak finansmanı ayrı yapı</div>
+      </div>
+    </div>
+    <div class="xtargets">
+      <div class="xt" style="margin-bottom:12px">2032 HEDEFLERİ</div>
+      <div class="xtgrid">
+        <div><b>1B$+</b><span>CİRO</span></div>
+        <div><b>300M$+</b><span>EBITDA</span></div>
+        <div><b>3,5B$+</b><span>DEĞERLEME</span></div>
+        <div><b>1,25B$+</b><span>AUM</span></div>
+      </div>
+    </div>
+    <div class="xroad">
+      <div class="xt" style="margin-bottom:14px">YOL HARİTASI</div>
+      <div class="xrgrid">
+        <div><i></i><b>2027</b><span>Temel atma</span></div>
+        <div><i></i><b>2028</b><span>Büyüme</span></div>
+        <div><i></i><b>2029</b><span>Fon kuruluşu</span></div>
+        <div><i></i><b>2030</b><span>Uluslararası genişleme</span></div>
+        <div><i></i><b>2031</b><span>Değer yaratma</span></div>
+        <div><i></i><b>2032</b><span>Liderlik &amp; Exit</span></div>
+      </div>
+    </div>
+    <div class="xbanner">★ &nbsp;ÖNE ÇIKAN PROJE: <b>FORMULA E İSTANBUL &amp; FUTURE MOBILITY WEEK</b></div>
+  </div>
+  <p class="lead" style="margin-top:22px">Bu girişimin marketing, kreatif ve yatırımcı dokümantasyonu tarafı, ilerleyen sekmelerde detaylandırılan yedi iş kolu ile Hasan Bayram tarafından yürütülecektir.</p>
+</section>
+
+<section class="page" id="s1">
+  <h3 class="title">Yedi İş Kolu</h3>
+  <p class="lead">Kartlara tıklayarak adımları görüntüleyebilirsiniz. Tüm çıktılar Aykut Bey onayı ve (finansal içeriklerde) hukuk kontrolü ile yayınlanır.</p>
+  <div class="cards">
+    <div class="card"><span class="tag">2–4 HAFTA</span><h4>1 · Marka ve Görsel Kimlik</h4><p>Gri-bordo logo temelinde tutarlı, güven veren kurumsal kimlik.</p><ul><li>Kimlik denetimi ve envanter</li><li>Brand book: logo kuralları, renk, tipografi, ses tonu (TR/DE/EN)</li><li>Alt marka mimarisi: Aviation / Defense / Technology / Energy & Mining / Fund</li><li>Şablon kütüphanesi: sunum, rapor, imza, sosyal medya, roll-up</li><li>Üç dilli terminoloji sözlüğü + ekip eğitimi</li></ul><div class="more">Adımları göster ▾</div></div>
+    <div class="card"><span class="tag">4–10 HAFTA</span><h4>2 · Web Siteleri</h4><p>Çok dilli, regülasyona uygun kurumsal dijital varlıklar.</p><ul><li>Alan adları, kurumsal e-posta, SSL, barındırma</li><li>turkpower.com: bilgi mimarisi + TR/DE/EN içerik</li><li>Fon ön tanıtım bölümü + ilgi kaydı formu (hukuk onaylı, KVKK/GDPR)</li><li>Formula E / Future Mobility Week vitrin sayfası</li><li>SEO, analitik, aylık trafik raporu</li></ul><div class="more">Adımları göster ▾</div></div>
+    <div class="card"><span class="tag">6–12 HAFTA</span><h4>3 · Görsel İçerik ve Video</h4><p>Kurumsal yatırımcıya ve diasporaya güçlü görsel hikaye.</p><ul><li>İnfografiklerin yeni kimlikle revizyonu + 4 sektör one-pager'ı</li><li>Fon modeli infografiği ve fotoğraf arşivi</li><li>Kurumsal tanıtım filmi (2–3 dk, 3 teklif kuralı)</li><li>Diaspora fon videosu (60–90 sn) + sosyal medya kesitleri</li><li>Formula E, Electra ve enerji proje videoları</li></ul><div class="more">Adımları göster ▾</div></div>
+    <div class="card"><span class="tag">SÜREKLİ</span><h4>4 · Dijital Pazarlama</h4><p>Lansman öncesi diasporada bilinirlik ve güven inşası.</p><ul><li>Kanal stratejisi: LinkedIn (EN/DE), Instagram + YouTube (TR/DE), X</li><li>Aylık içerik takvimi — haftada 3–5 içerik</li><li>Topluluk kuruluşlarıyla iş birlikleri</li><li>Hukuk onaylı bilinirlik kampanyaları + A/B testleri</li><li>E-bülten ve aylık KPI raporu</li></ul><div class="more">Adımları göster ▾</div></div>
+    <div class="card"><span class="tag">4–6 HAFTA + SÜREKLİ</span><h4>5 · Basın ve PR</h4><p>Türkiye ve Avrupa medyasında güven inşa eden görünürlük.</p><ul><li>Segmentli medya listesi (TR + Avrupa Türkçe + Alman ekonomi basını)</li><li>Basın kiti: tanıtım dosyası, biyografiler, görsel paket</li><li>Kilometre taşlarında basın bültenleri</li><li>Aykut Bey için röportaj/panel fırsatları ve konuşma notları</li><li>Kriz iletişim protokolü</li></ul><div class="more">Adımları göster ▾</div></div>
+    <div class="card"><span class="tag">4–8 HAFTA + BAKIM</span><h4>6 · Yatırımcı Dokümantasyonu</h4><p>Kurumsal standartta, güncel ve tutarlı doküman seti.</p><ul><li>Yatırım memorandumu v2.0 + sürüm kontrolü</li><li>Kurumsal pitch deck (15–20 slayt, EN/DE) + diaspora sunumu (TR/DE)</li><li>2 sayfalık teaser + zor sorular FAQ bankası</li><li>Veri odası: klasör yapısı, NDA, erişim yetkileri</li><li>Çeyreklik yatırımcı ve aylık proje raporu şablonları</li></ul><div class="more">Adımları göster ▾</div></div>
+    <div class="card"><span class="tag">SÜREKLİ</span><h4>7 · Yatırımcı Görüşme Desteği</h4><p>Kurumsal yatırımcı sürecinin koordinasyonu ve takibi.</p><ul><li>Segmentli hedef yatırımcı listesi + profil notları</li><li>CRM/pipeline tablosu, haftalık güncelleme</li><li>Görüşme öncesi brifing notu + uyarlanmış sunum</li><li>Follow-up ve due diligence koordinasyonu</li><li>Aykut Bey'e haftalık pipeline özeti</li></ul><div class="more">Adımları göster ▾</div></div>
+  </div>
+</section>
+
+<section class="page" id="s2">
+  <h3 class="title">Uygulama Takvimi — İlk 6 Ay</h3>
+  <p class="lead">Kritik yol: IM → pitch deck → veri odası → yatırımcı görüşmeleri.</p>
+  <div class="tl">
+    <div class="ev"><div class="w">AY 1</div><b>Temel atma</b><p>Kapsam onayı · brand book · alan adları ve altyapı · IM yeniden yazımına başlangıç</p></div>
+    <div class="ev"><div class="w">AY 2</div><b>Üretim başlıyor</b><p>Kurumsal pitch deck v1 · web sitesi içerik + tasarım · sosyal medya kanalları ve içerik takvimi</p></div>
+    <div class="ev"><div class="w">AY 3</div><b>Görsel güç</b><p>Kurumsal film prodüksiyonu · infografik/one-pager seti · teaser + FAQ · basın kiti</p></div>
+    <div class="ev"><div class="w">AY 4</div><b>Yatırımcı altyapısı</b><p>Veri odası · hedef yatırımcı listesi + pipeline · fon ön tanıtım sayfası (hukuk onaylı)</p></div>
+    <div class="ev"><div class="w">AY 5</div><b>Sahaya iniş</b><p>Diaspora videosu · ilk bilinirlik kampanyası · ilk kurumsal görüşmelere brifing desteği</p></div>
+    <div class="ev"><div class="w">AY 6</div><b>Görünürlük ve ölçüm</b><p>İlk basın bültenleri · e-bülten başlangıcı · 6 aylık KPI değerlendirmesi ve plan revizyonu</p></div>
+  </div>
+</section>
+
+<section class="page" id="s3">
+  <h3 class="title">Bütçe Modeli</h3>
+  <p class="lead">Tek seferlik ödeme yoktur. Tüm iş kolları sabit aylık hizmet bedeli ile yürütülür; harcama gerektiren kalemler dönemi geldiğinde ortak kararla uygulanır.</p>
+  <div class="cards">
+    <div class="card anim" style="cursor:default;border-left-color:var(--red)">
+      <span class="tag">SABİT AYLIK HİZMET BEDELİ</span>
+      <h4 style="font-size:34px">2.500 € <span style="font-size:15px;color:var(--gray2);font-weight:600">/ ay</span></h4>
+      <p>Hasan Bayram tarafından yürütülen tüm iş kollarını kapsar: marka ve görsel kimlik, web siteleri, görsel içerik ve video koordinasyonu, dijital pazarlama, basın/PR, yatırımcı dokümantasyonu ve görüşme desteği. Ek ücret, tek seferlik ödeme veya sürpriz maliyet yoktur.</p>
+    </div>
+    <div class="card anim" style="cursor:default;border-left-color:var(--gray)">
+      <span class="tag">ORTAK KARARLA UYGULANACAK KALEMLER</span>
+      <h4>Pazarlama ve Dış Harcamalar</h4>
+      <p>Dijital kampanya bütçeleri, prodüksiyon (film/video çekimi), ajans destekleri ve araç/yazılım abonelikleri gibi dışa yapılan harcamalar bu bedele dahil değildir. Bu kalemler dönemi geldiğinde Aykut Bey ile birlikte değerlendirilir ve ortak kararla hayata geçirilir; üç teklif kuralı uygulanır.</p>
+    </div>
+  </div>
+  <br>
+  <table class="resp">
+    <tr><th>İlke</th><th>Açıklama</th></tr>
+    <tr><td data-l="İlke">Sabit maliyet</td><td data-l="Açıklama">Aylık 2.500 € dışında hizmet ücreti yok</td></tr>
+    <tr><td data-l="İlke">Tek seferlik ödeme yok</td><td data-l="Açıklama">Kurulum, teslim veya proje başı ücret alınmaz</td></tr>
+    <tr><td data-l="İlke">Ortak karar</td><td data-l="Açıklama">Pazarlama/prodüksiyon harcamaları dönemi geldiğinde birlikte kararlaştırılır</td></tr>
+    <tr><td data-l="İlke">Şeffaflık</td><td data-l="Açıklama">Aylık faaliyet ve harcama raporu Aykut Bey'e sunulur</td></tr>
+  </table>
+</section>
+
+<section class="page" id="s4">
+  <h3 class="title">Başarı Ölçütleri — İlk 6 Ay</h3>
+  <p class="lead">Her iş kolu ölçülebilir hedeflerle takip edilir; aylık KPI raporu Aykut Bey'e sunulur.</p>
+  <table class="resp">
+    <tr><th>İş Kolu</th><th>KPI</th><th>Hedef</th></tr>
+    <tr><td data-l="İş Kolu">Marka</td><td data-l="KPI">Brand book yayını, şablon kullanımı</td><td data-l="Hedef" class="r">4. haftada yayın; %100 şablonlu üretim</td></tr>
+    <tr><td data-l="İş Kolu">Web</td><td data-l="KPI">Aylık ziyaretçi, ilgi kaydı</td><td data-l="Hedef" class="r">1.000+ kayıt</td></tr>
+    <tr><td data-l="İş Kolu">Video / Görsel</td><td data-l="KPI">Teslim + toplam izlenme</td><td data-l="Hedef" class="r">12. haftada teslim; 100K+ izlenme</td></tr>
+    <tr><td data-l="İş Kolu">Sosyal medya</td><td data-l="KPI">Takipçi, etkileşim oranı</td><td data-l="Hedef" class="r">10K+ takipçi; %3+ etkileşim</td></tr>
+    <tr><td data-l="İş Kolu">PR</td><td data-l="KPI">Nitelikli haber çıkışı</td><td data-l="Hedef" class="r">6 ayda 10+</td></tr>
+    <tr><td data-l="İş Kolu">Dokümantasyon</td><td data-l="KPI">Doküman seti + veri odası güncelliği</td><td data-l="Hedef" class="r">8. haftada hazır; %100 güncel</td></tr>
+    <tr><td data-l="İş Kolu">Yatırımcı desteği</td><td data-l="KPI">Görüşme sayısı, pipeline doluluğu</td><td data-l="Hedef" class="r">Aykut Bey ile belirlenecek</td></tr>
+  </table>
+</section>
+
+<section class="page" id="s5">
+  <h3 class="title">Sorumluluk Matrisi (RACI)</h3>
+  <p class="lead">R: Yürütür · A: Onaylar. Finansal tanıtım içerikleri her durumda hukuk kontrolünden geçer.</p>
+  <table class="resp">
+    <tr><th>Faaliyet</th><th>Hasan Bayram</th><th>Aykut Ferah</th><th>Hukuk</th><th>Ajans</th></tr>
+    <tr><td data-l="Faaliyet">Marka kimliği</td><td data-l="Hasan Bayram" class="r">R</td><td data-l="Aykut Ferah">A</td><td data-l="Hukuk">—</td><td data-l="Ajans">Destek</td></tr>
+    <tr><td data-l="Faaliyet">Web siteleri</td><td data-l="Hasan Bayram" class="r">R</td><td data-l="Aykut Ferah">A</td><td data-l="Hukuk">Fon sayfası</td><td data-l="Ajans">Geliştirme</td></tr>
+    <tr><td data-l="Faaliyet">Video / görsel</td><td data-l="Hasan Bayram" class="r">R</td><td data-l="Aykut Ferah">A</td><td data-l="Hukuk">—</td><td data-l="Ajans">Üretim</td></tr>
+    <tr><td data-l="Faaliyet">Dijital pazarlama</td><td data-l="Hasan Bayram" class="r">R</td><td data-l="Aykut Ferah">A</td><td data-l="Hukuk">Metin onayı</td><td data-l="Ajans">Destek</td></tr>
+    <tr><td data-l="Faaliyet">Basın / PR</td><td data-l="Hasan Bayram" class="r">R</td><td data-l="Aykut Ferah">Sözcü + A</td><td data-l="Hukuk">Gerekirse</td><td data-l="Ajans">Opsiyonel</td></tr>
+    <tr><td data-l="Faaliyet">IM ve sunumlar</td><td data-l="Hasan Bayram" class="r">R</td><td data-l="Aykut Ferah">A</td><td data-l="Hukuk">Risk bölümü</td><td data-l="Ajans">Tasarım</td></tr>
+    <tr><td data-l="Faaliyet">Yatırımcı görüşmeleri</td><td data-l="Hasan Bayram">Destek + koordinasyon</td><td data-l="Aykut Ferah" class="r">R / A</td><td data-l="Hukuk">DD desteği</td><td data-l="Ajans">—</td></tr>
+  </table>
+</section>
+
+<section class="page" id="s6">
+  <h3 class="title">Riskler ve Önlemler</h3>
+  <p class="lead">Plan, itibar ve regülasyon önceliğiyle tasarlandı.</p>
+  <div class="cards">
+    <div class="card" style="cursor:default"><h4>Regülasyon</h4><p>Fonla ilgili her kamuya açık metin hukuk onayından geçer; onaysız hiçbir fon içeriği yayınlanmaz. Lansman öncesi iletişim kurumsal bilinirlik düzeyinde tutulur.</p></div>
+    <div class="card" style="cursor:default"><h4>İtibar</h4><p>Diaspora yatırımlarındaki geçmiş kötü örnekler nedeniyle abartılı getiri vaadi içeren dil kullanılmaz; şeffaflık ve bağımsız denetim vurgusu esastır.</p></div>
+    <div class="card" style="cursor:default"><h4>Bütçe</h4><p>Üç teklif kuralı, kalem bazlı onay ve aylık bütçe raporu ile kontrol sağlanır. Bütçe onayı her durumda Aykut Bey'e aittir.</p></div>
+    <div class="card" style="cursor:default"><h4>Takvim</h4><p>Haftalık durum toplantısı; kritik yol (IM → deck → veri odası → görüşmeler) her zaman önceliklidir.</p></div>
+    <div class="card" style="cursor:default"><h4>Marka tutarlılığı</h4><p>Tüm üretim brand book ve şablonlar üzerinden yapılır; ajanslar için kılavuz kullanımı zorunludur.</p></div>
+  </div>
+  <div class="footer">Bu plan öneri niteliğindedir; kapsam, takvim ve bütçe Aykut Bey ile yapılacak görüşmede netleştirilecektir. Bütçe rakamları bağlayıcı olmayan piyasa tahminleridir. · Hasan Bayram · Temmuz 2026</div>
+</section>
+
+</main>
+
+<script>
+function start(){
+  document.getElementById('intro').style.display='none';
+  document.getElementById('skipIntro').style.display='none';
+  document.getElementById('hero').style.display='none';
+  document.getElementById('nav').style.display='block';
+  document.getElementById('main').style.display='block';
+  window.scrollTo(0,0);
+  playAnims(document.getElementById('s0'));
+}
+// ===== VIDEO-MODE INTRO (autoplay, rolling transitions) =====
+function countUp(el){
+  const t=parseFloat(el.dataset.cnt), dec=parseInt(el.dataset.dec||'0');
+  const suf=el.dataset.suf||'', from=parseFloat(el.dataset.from||'0');
+  const t0=performance.now(), dur=1600;
+  function step(now){
+    const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
+    const v=from+(t-from)*e;
+    el.textContent=v.toFixed(dec).replace('.',',')+suf;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const INTRO={idx:-1,dur:5200,timer:null,slides:[],ended:false};
+INTRO.slides=[...document.querySelectorAll('#intro .slide')];
+const progBars=[...document.querySelectorAll('#iprog i')];
+document.body.style.overflow='hidden';
+function showSlide(i){
+  INTRO.slides.forEach((s,j)=>{
+    s.classList.remove('on');
+    if(j<i)s.classList.add('off'); else s.classList.remove('off');
+  });
+  const sl=INTRO.slides[i];
+  sl.classList.add('on','play');
+  sl.querySelectorAll('[data-cnt]').forEach(countUp);
+  progBars.forEach((b,j)=>{b.classList.remove('act');b.classList.toggle('fill',j<i)});
+  void progBars[i].offsetWidth; progBars[i].classList.add('act');
+  INTRO.idx=i;
+  clearTimeout(INTRO.timer);
+  INTRO.timer=setTimeout(nextSlide,INTRO.dur);
+}
+function nextSlide(){
+  if(INTRO.ended)return;
+  if(INTRO.idx>=INTRO.slides.length-1){endIntro();return}
+  showSlide(INTRO.idx+1);
+}
+function endIntro(){
+  if(INTRO.ended)return; INTRO.ended=true;
+  clearTimeout(INTRO.timer);
+  const intro=document.getElementById('intro');
+  intro.classList.add('done');
+  document.getElementById('skipIntro').style.display='none';
+  document.body.style.overflow='';
+  if(window.fxStop)window.fxStop();
+  setTimeout(()=>{intro.style.display='none';window.scrollTo(0,0)},950);
+}
+function skipIntro(){endIntro()}
+document.getElementById('intro').addEventListener('click',()=>{if(!INTRO.ended)nextSlide()});
+setTimeout(()=>showSlide(0),250);
+// ember particle canvas
+(function(){
+  const cv=document.getElementById('fx'); if(!cv)return;
+  const cx=cv.getContext('2d'); let run=true;
+  function fit(){cv.width=innerWidth;cv.height=innerHeight}
+  fit(); addEventListener('resize',fit);
+  const P=[]; const N=Math.min(70,Math.floor(innerWidth/16));
+  for(let i=0;i<N;i++)P.push({
+    x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+    r:Math.random()*2.4+.6, s:Math.random()*.55+.18,
+    d:Math.random()*Math.PI*2, tw:Math.random()*Math.PI*2
+  });
+  function tick(){
+    if(!run)return;
+    cx.clearRect(0,0,cv.width,cv.height);
+    for(const p of P){
+      p.y-=p.s; p.x+=Math.sin(p.d+=.004)*.35; p.tw+=.05;
+      if(p.y<-8){p.y=cv.height+8;p.x=Math.random()*cv.width}
+      const a=.25+Math.abs(Math.sin(p.tw))*.5;
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);
+      cx.fillStyle=`rgba(255,${60+Math.floor(Math.random()*30)},60,${a})`;
+      cx.shadowColor='rgba(224,43,43,.8)';cx.shadowBlur=8;
+      cx.fill();cx.shadowBlur=0;
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+  window.fxStop=()=>{run=false};
+})();
+// animated counters
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){animate(e.target);io.unobserve(e.target)}})});
+document.querySelectorAll('.stat .n').forEach(el=>io.observe(el));
+function animate(el){const t=+el.dataset.n;let c=0;const step=Math.max(1,Math.ceil(t/40));const iv=setInterval(()=>{c+=step;if(c>=t){c=t;clearInterval(iv)}el.textContent=c},30)}
+// decorative SVG icons
+const IC={
+ brush:'<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/>',
+ globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+ video:'<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>',
+ mega:'<path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+ news:'<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6z"/>',
+ file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+ users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+ euro:'<path d="M4 10h12"/><path d="M4 14h9"/><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/>',
+ shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+ alert:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+ wallet:'<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+ layers:'<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+ flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+ zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+ db:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+ chart:'<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+ grid:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>'
+};
+function chipEl(name,sm){const d=document.createElement('div');d.className='ichip'+(sm?' sm':'');d.innerHTML='<svg class="ic" viewBox="0 0 24 24">'+IC[name]+'</svg>';return d}
+// card icons (iş kolları)
+const cardIcons=['brush','globe','video','mega','news','file','users'];
+document.querySelectorAll('#s1 .card').forEach((c,i)=>c.insertBefore(chipEl(cardIcons[i]||'grid'),c.firstChild));
+// budget card icons
+const bIcons=['euro','users'];
+document.querySelectorAll('#s3 .card').forEach((c,i)=>c.insertBefore(chipEl(bIcons[i]||'euro'),c.firstChild));
+// risk card icons
+const rIcons=['shield','alert','wallet','clock','brush'];
+document.querySelectorAll('#s6 .card').forEach((c,i)=>c.insertBefore(chipEl(rIcons[i]||'shield'),c.firstChild));
+// timeline event icons
+const tIcons=['flag','zap','video','db','mega','chart'];
+document.querySelectorAll('#s2 .ev').forEach((ev,i)=>{
+  const h=document.createElement('div');h.className='evh';
+  h.appendChild(chipEl(tIcons[i]||'flag',true));
+  const w=ev.querySelector('.w'),b=ev.querySelector('b');
+  const txt=document.createElement('div');
+  if(w)txt.appendChild(w); if(b)txt.appendChild(b);
+  h.appendChild(txt); ev.insertBefore(h,ev.firstChild);
+});
+// section title icons
+const sIcons={s1:'grid',s2:'cal',s3:'euro',s4:'chart',s5:'users',s6:'shield'};
+Object.keys(sIcons).forEach(id=>{
+  const sec=document.getElementById(id); const h=sec.querySelector('h3.title'); if(!h)return;
+  const wrap=document.createElement('div'); wrap.className='thead';
+  h.parentNode.insertBefore(wrap,h); wrap.appendChild(chipEl(sIcons[id],true)); wrap.appendChild(h);
+});
+// staggered reveal animations
+document.querySelectorAll('.cards .card, .tl .ev, main table, main .lead, h3.title, .exec .xhead, .exec .xbox, .exec .xtargets, .exec .xroad, .exec .xbanner').forEach(el=>el.classList.add('anim'));
+function playAnims(pg){
+  pg.querySelectorAll('.anim').forEach((el,i)=>{
+    el.style.animation='none'; void el.offsetWidth;
+    el.style.animation=''; el.style.animationDelay=Math.min(i*90,700)+'ms';
+  });
+}
+// tabs
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('act'));
+  b.classList.add('act');
+  document.querySelectorAll('.page').forEach(s=>s.classList.remove('show'));
+  const pg=document.getElementById(b.dataset.s);
+  pg.classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+  playAnims(pg);
+}));
+// expandable cards
+document.querySelectorAll('#s1 .card').forEach(c=>c.addEventListener('click',()=>{
+  c.classList.toggle('open');
+  const m=c.querySelector('.more');
+  if(m)m.textContent=c.classList.contains('open')?'Gizle ▴':'Adımları göster ▾';
+}));
+</script>
+</body>
+</html>
